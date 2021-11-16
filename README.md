@@ -4,7 +4,7 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![diagrams/Azure%20Network%20Repository%20Project.jpg](https://github.com/wildycapellan/Elk-Cloud-Security-Project/blob/main/Azure%20Network%20Repository%20Project.jpg)
+![TODO: Update the path with the name of your diagram](diagrams/Azure%20Network%20Repository%20Project.jpg)
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the YML Playbook file may be used to install only certain pieces of it, such as Filebeat.
 
@@ -25,9 +25,9 @@ The main purpose of this network is to expose a load-balanced and monitored inst
 
 Load balancing ensures that the application will be highly available, in addition to restricting inbound traffic to the network.
 - _TODO: What aspect of security do load balancers protect?
-- 
+
 - Load balancers protect the Availability, Web Traffic, and Web Security. Load balancers protect the machine from DDoS attacks by rerouting live traffic.
-- 
+
 -   What is the advantage of a jump box?_
 
 - The advantage of a jump box is that it allows automation, improves security, audits traffic of segmented networks, and allows for ease of access control by using a single point to be secured and monitored.
@@ -62,11 +62,11 @@ Only the JumpBoxProvisioner machine can accept connections from the Internet. Ac
 
 Machines within the network can only be accessed by each other.
 - _TODO: Which machine did you allow to access your ELK VM? 
-- 
+
 - JumpBoxProvisioner
-- 
+
 - What was its IP address?_
-- 
+
 - Private IP: 10.0.0.4 via ssh on port 22
 
 
@@ -85,12 +85,12 @@ A summary of the access policies in place can be found in the table below.
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
 - _TODO: What is the main advantage of automating configuration with Ansible?_
-- 
-- Ansible allows you to deploy multiple applications using a single playbook.
 
-The playbook implements the following tasks:
+- Ansible allows you to deploy multiple applications using a single    playbook.
+
+- The playbook implements the following tasks:
 - _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- 
+
  ...Machine groups and remote user specifications:
 
 - name: Configure Elk VM with Docker
@@ -125,7 +125,7 @@ Launch docker container with these ports:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![TODO: Update the path with the name of your screenshot of docker ps output](diagrams/Screenshot%20Web-ELK-1%20docker%20ps%202021-11-16%20153319.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
