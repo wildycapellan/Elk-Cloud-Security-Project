@@ -125,29 +125,65 @@ Launch docker container with these ports:
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](diagrams/Screenshot%20Web-ELK-1%20docker%20ps%202021-11-16%20153319.png)
+![TODO: Update the path with the name of your screenshot of docker ps output](diagrams/Screenshot%20update%20path%20with%20names%20of%20docker%20ps%202021-11-16%20165313.png) 
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
+
 - _TODO: List the IP addresses of the machines you are monitoring_
+Web-1: 10.0.0.5
+Web-2: 10.0.0.6
 
 We have installed the following Beats on these machines:
 - _TODO: Specify which Beats you successfully installed_
 
+Filebeat
+Metricbeat
+
 These Beats allow us to collect the following information from each machine:
 - _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+
+Filebeat is a lightweight shipper for forwarding and centralizing log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
+
+Metricbeat is a lightweight shipper that you can install on your servers to periodically collect metrics from the operating system and from services running on the server. Metricbeat takes the metrics and statistics that it collects and ships them to the output that you specify, such as Elasticsearch or Logstash.
+
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the filebeat playbook file to /etc/ansible.
+
+![files](https://github.com/wildycapellan/Elk-Cloud-Security-Project/blob/main/diagrams/Screenshot%20filebeat%20playbook%20file%20to%20etc%20ansible%202021-11-16%20163620.png?raw=true)
+
+- Update the /etc/ansible/hosts file to include Web-1, Web-2, and Web-ELK-1
+
+![hosts](diagrams/Screenshot%20-%20Update%20the%20etc%20ansible%20hosts%20file%20to%20include%20Web-1%2C%20Web-2%2C%20and%20Web-ELK-1%20update%20t2021-11-16%20163833.png)
+
+- Run the playbook, and navigate to hosts to check that the installation worked as expected.
+![playbook](https://github.com/wildycapellan/Elk-Cloud-Security-Project/blob/main/diagrams/Screenshot%20Run%20the%20playbook,%20and%20navigate%20to%20hosts%20to%20check%20that%20the%20installation%20worked%20as%20expected%202021-11-16%20164143.png?raw=true)
+
+![](https://github.com/wildycapellan/Elk-Cloud-Security-Project/blob/main/diagrams/Screenshot%20check%20that%20data%20is%20recevived%20from%20filebeat%202021-11-16%20164251.png?raw=true)
+
+![](https://github.com/wildycapellan/Elk-Cloud-Security-Project/blob/main/diagrams/Screenshot%20filebeat%20dashboard%202021-11-16%20164417.png?raw=true)
 
 _TODO: Answer the following questions to fill in the blanks:_
 - _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
+
+filebeat-playbook.yml the file was copy to /etc/ansible/playbooks.
+
+- _Which file do you update to make Ansible run the playbook on a specific machine?
+
+/etc/ansible/hosts file and add the IP address of the VM's under [webserver].
+
+ How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
+
+ By specifying two groups in the /etc/ansible/hosts file, labeled [webservers] for filebeat, and [ELK] for Elk installation.
+
+
 - _Which URL do you navigate to in order to check that the ELK server is running?
+
+http://52.165.18.54:5601/app/kibana#/home
+
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
