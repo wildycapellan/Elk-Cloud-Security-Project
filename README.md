@@ -8,7 +8,7 @@ The files in this repository were used to configure the network depicted below.
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the YML Playbook file may be used to install only certain pieces of it, such as Filebeat.
 
-  - _TODO: Enter the playbook file._
+  - Enter the playbook file._
 
 This document contains the following details:
 - Description of the Topology
@@ -24,23 +24,23 @@ This document contains the following details:
 The main purpose of this network is to expose a load-balanced and monitored instance of DVWA, the D*mn Vulnerable Web Application.
 
 Load balancing ensures that the application will be highly available, in addition to restricting inbound traffic to the network.
-- _TODO: What aspect of security do load balancers protect?
+-What aspect of security do load balancers protect?
 
-- Load balancers protect the Availability, Web Traffic, and Web Security. Load balancers protect the machine from DDoS attacks by rerouting live traffic.
+-Load balancers protect the Availability, Web Traffic, and Web Security. Load balancers protect the machine from DDoS attacks by rerouting live traffic.
 
--   What is the advantage of a jump box?_
+-What is the advantage of a jump box?_
 
-- The advantage of a jump box is that it allows automation, improves security, audits traffic of segmented networks, and allows for ease of access control by using a single point to be secured and monitored.
+-The advantage of a jump box is that it allows automation, improves security, audits traffic of segmented networks, and allows for ease of access control by using a single point to be secured and monitored.
 
 Integrating an ELK metrics and statistics server allows users to easily monitor the vulnerable VMs for changes to the logs files and system.
 
-- _TODO: What does Filebeat watch for?_
+-What does Filebeat watch for?_
 
-- Filebeat monitors for any changes in information and when the changes took place.
+-Filebeat monitors for any changes in information and when the changes took place.
 - 
-- _TODO: What does Metricbeat record?_
+-What does Metricbeat record?_
 
-- Metricbeat records metrics and statistical data which is then sent out to a specified output: Elasticsearch or logistach for indexing.
+-Metricbeat records metrics and statistical data which is then sent out to a specified output: Elasticsearch or logistach for indexing.
 
 The configuration details of each machine may be found below.
 _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdown_tables) to add/remove values from the table_.
@@ -58,10 +58,10 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 The machines on the internal network are not exposed to the public Internet. 
 
 Only the JumpBoxProvisioner machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_20.120.98.39.
+- Add whitelisted IP addresses_20.120.98.39.
 
 Machines within the network can only be accessed by each other.
-- _TODO: Which machine did you allow to access your ELK VM? 
+- Which machine did you allow to access your ELK VM? 
 
 - JumpBoxProvisioner
 
@@ -84,12 +84,12 @@ A summary of the access policies in place can be found in the table below.
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+- What is the main advantage of automating configuration with Ansible?_
 
 - Ansible allows you to deploy multiple applications using a single    playbook.
 
 - The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
+- In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
 
  ...Machine groups and remote user specifications:
 
@@ -130,18 +130,19 @@ The following screenshot displays the result of running `docker ps` after succes
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
 
-- _TODO: List the IP addresses of the machines you are monitoring_
-Web-1: 10.0.0.5
+- List the IP addresses of the machines you are monitoring
+
+Web-1: 10.0.0.5 
 Web-2: 10.0.0.6
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- Specify which Beats you successfully installed_
 
 Filebeat
 Metricbeat
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
 
 Filebeat is a lightweight shipper for forwarding and centralizing log data. Installed as an agent on your servers, Filebeat monitors the log files or locations that you specify, collects log events, and forwards them either to Elasticsearch or Logstash for indexing.
 
