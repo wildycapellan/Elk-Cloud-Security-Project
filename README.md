@@ -378,123 +378,133 @@ http://52.165.18.54:5601/app/kibana#/home
 
 _As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
 
+<details><summary>Click for command list</summary>
 ------Filebeat------
--First ssh into your ansible container by running the following command: :~$ ssh -i [name of keygen] [user@ipaddress]
 
-To create the filebeat-config.yml file run the following command:
-ansiblecontainer:~$ cd /etc/ansible/files /etc/ansible/files# curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/filebeat-config.yml
+-First ssh into your ansible container by running the following command:
+	`:~$ ssh -i [name of keygen] [user@ipaddress]`
 
-Edit the file to servers info by running the following command:
+- To create the filebeat-config.yml file run the following command:
 
-/etc/ansible/files# nano filebeat-config.yml
+`ansiblecontainer:~$ cd /etc/ansible/files`
+`/etc/ansible/files# curl https://gist.githubusercontent.com/slape/5cc350109583af6cbe577bbcc0710c93/raw/eca603b72586fbe148c11f9c87bf96a63cb25760/Filebeat > /etc/ansible/filebeat-config.yml`
 
-  output.elasticsearch: 
-  hosts: ["10.1.0.4:9200"] #<- edit to ELK IP address
-  username: "elastic"
-  password: "changeme"
-  		&
-  setup.kibana:
-  host: "10.1.0.4:5601" #<- edit to ELK IP address
 
-To create the filebeat-playbook.yml file run the following command: /etc/ansible# nano filebeat-playbook.yml
+- Edit the file to servers info by running the following command:
+	
+	`/etc/ansible/files# nano filebeat-config.yml`
 
-Configure the file to download the .deb file, install the .deb file, run the filebeat modules enable system, run the filebeat setup command, run the service filebeat start command, and to enable the filebeat service on boot. The configuration of the playbook should resemble:
+		output.elasticsearch: 
+		hosts: ["10.1.0.4:9200"] #<- edit to ELK IP address
+		username: "elastic"
+		password: "changeme"
+				&
+		setup.kibana:
+		host: "10.1.0.4:5601" #<- edit to ELK IP address
 
-	- name: Installing and Launch Filebeat
-	  hosts: webservers
-	  become: yes
-	  tasks:
-		# Use command module
-	- name: Download filebeat .deb file
-		  command: curl -L -O 		https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
+- To create the filebeat-playbook.yml file run the following command:
+	`/etc/ansible# nano filebeat-playbook.yml`
 
-		# Use command module
-	- name: Install filebeat .deb
-		  command: dpkg -i filebeat-7.4.0-amd64.deb
+- Configure the file to download the .deb file, install the .deb file, run the filebeat modules enable system, run the filebeat setup command, run the service filebeat start command, and to enable the filebeat service on boot. The configuration of the playbook should resemble:
 
-		# Use copy module
-	- name: Drop in filebeat.yml
-		  copy:
-  		src: /etc/ansible/files/filebeat-config.yml
-  		dest: /etc/filebeat/filebeat.yml
+---
+		- name: Installing and Launch Filebeat
+  		  hosts: webservers
+  		  become: yes
+  		  tasks:
+    		# Use command module
+  		- name: Download filebeat .deb file
+    		  command: curl -L -O 		https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.4.0-amd64.deb
 
-		# Use command module
-	 - name: Enable and Configure System Module
-	   command: filebeat modules enable system
+    		# Use command module
+  		- name: Install filebeat .deb
+    		  command: dpkg -i filebeat-7.4.0-amd64.deb
 
-	 # Use command module
-	 - name: Setup filebeat
-	   command: filebeat setup
+    		# Use copy module
+  		- name: Drop in filebeat.yml
+    		  copy:
+      		src: /etc/ansible/files/filebeat-config.yml
+      		dest: /etc/filebeat/filebeat.yml
 
-	 # Use command module
-	 - name: Start filebeat service
-	   command: service filebeat start
+    		# Use command module
+ 		 - name: Enable and Configure System Module
+   		   command: filebeat modules enable system
 
-	 # Use systemd module
-	- name: Enable service filebeat on boot
-	  systemd:
- 		    name: filebeat
-		    enabled: yes
+   		 # Use command module
+ 		 - name: Setup filebeat
+  		   command: filebeat setup
 
-To run this playbook navigate to the directory the file is at and run the following command:
+   		 # Use command module
+ 		 - name: Start filebeat service
+  		   command: service filebeat start
 
-/etc/ansible# ansible-playbook filebeat-playbook.yml
+   		 # Use systemd module
+  		- name: Enable service filebeat on boot
+  		  systemd:
+     		    name: filebeat
+    		    enabled: yes
+
+
+- To run this playbook navigate to the directory the file is at and run the following command:
+
+	`/etc/ansible# ansible-playbook filebeat-playbook.yml`
+
 
 ------Metricbeat------
 
-To create the metricbeat-config.yml file run the following command:
+- To create the metricbeat-config.yml file run the following command:
 
-ansiblecontainer:~$ cd /etc/ansible/files
+	`ansiblecontainer:~$ cd /etc/ansible/files`
 
-/etc/ansible/files# cp filebeat-config.yml metricbeat-config.yml
+	`/etc/ansible/files# cp filebeat-config.yml metricbeat-config.yml`
+- No edits to the copied contents required for the config file.
 
-No edits to the copied contents required for the config file.
+- To create the metricbeat-playbook.yml file navigate to where the filebeat-playbook file is located and run the following command:
 
-To create the metricbeat-playbook.yml file navigate to where the filebeat-playbook file is located and run the following command:
+	`/etc/ansible# cp filebeat-playbook.yml metricbeat-playbook.yml`
 
-/etc/ansible# cp filebeat-playbook.yml metricbeat-playbook.yml
+	`/etc/ansible# nano filebeat-playbook.yml`
 
-/etc/ansible# nano filebeat-playbook.yml
+- Change all "filebeat" to "metricbeat". Change the command URL path to metric beat path. The configuration of the playbook should resemble:
 
-Change all "filebeat" to "metricbeat". Change the command URL path to metric beat path. The configuration of the playbook should resemble:
+		---
+		- name: Installing and Launch Metricbeat
+  		  hosts: webservers
+  		  become: yes
+  		  tasks:
+    		# Use command module
+  		- name: Download metricbeat .deb file
+    		  command: curl -L -O 		https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.7.1-amd64.deb
 
-  ---
-  - name: Installing and Launch Metricbeat
-    hosts: webservers
-    become: yes
-    tasks:
-  	# Use command module
-  - name: Download metricbeat .deb file
-  	  command: curl -L -O 		https://artifacts.elastic.co/downloads/beats/metricbeat/metricbeat-7.7.1-amd64.deb
+    		# Use command module
+  		- name: Install metricbeat .deb
+    		  command: dpkg -i metricbeat-7.4.0-amd64.deb
 
-  	# Use command module
-  - name: Install metricbeat .deb
-  	  command: dpkg -i metricbeat-7.4.0-amd64.deb
+    		# Use copy module
+  		- name: Drop in metricbeat.yml
+    		  copy:
+      		src: /etc/ansible/files/metricbeat-config.yml
+      		dest: /etc/metricbeat/metricbeat.yml
 
-  	# Use copy module
-  - name: Drop in metricbeat.yml
-  	  copy:
-		src: /etc/ansible/files/metricbeat-config.yml
-		dest: /etc/metricbeat/metricbeat.yml
+    		# Use command module
+ 		 - name: Enable and Configure System Module
+   		   command: metricbeat modules enable system
 
-  	# Use command module
-   - name: Enable and Configure System Module
-     command: metricbeat modules enable system
+   		 # Use command module
+ 		 - name: Setup metricbeat
+  		   command: metricbeat setup
 
-   # Use command module
-   - name: Setup metricbeat
-     command: metricbeat setup
+   		 # Use command module
+ 		 - name: Start metricbeat service
+  		   command: service metricbeat start
 
-   # Use command module
-   - name: Start metricbeat service
-     command: service metricbeat start
+   		 # Use systemd module
+  		- name: Enable service metricbeat on boot
+  		  systemd:
+     		    name: metricbeat
+    		    enabled: yes
 
-   # Use systemd module
-  - name: Enable service metricbeat on boot
-    systemd:
-  	    name: metricbeat
-  	    enabled: yes
+- To run this playbook navigate to the directory the file is at and run the following command:
 
-To run this playbook navigate to the directory the file is at and run the following command:
-
-/etc/ansible# ansible-playbook metricbeat-playbook.yml
+	`/etc/ansible# ansible-playbook metricbeat-playbook.yml`
+</details>
